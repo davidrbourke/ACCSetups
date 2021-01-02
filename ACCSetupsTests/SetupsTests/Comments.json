@@ -1,0 +1,86 @@
+{
+	"carName": "ferrari_488_gt3_evo",
+	"basicSetup":
+	{
+		"tyres":
+		{
+			"tyreCompound": 0,
+			"tyrePressure": [ 0, 0, 0, 0 ] // Range: 23.3 to 35.0 is 0 to 147 (1 == 0.1) (LF, RF, LR, RR)
+		},
+		"alignment":
+		{
+			"camber": [ 0, 0, 0, 0 ], // -5.0 to 0.0
+			"toe": [ 0, 0, 0, 0 ], // -4.0 to 0.0
+			"staticCamber": [ -5.0888690948486328, 0.82517027854919434, -4.1249980926513672, 1.339378833770752 ],
+			"toeOutLinear": [ 0.0017196985427290201, -0.0013722430448979139, -0.0015683806268498302, 0.00032316468423232436 ],
+			"casterLF": 0, // 5.0 (0 to 98)
+			"casterRF": 0, //20.6 some rounding happening, sometime 1 == 0.1, sometimes == 0.2 (0 to 98)
+			"steerRatio": 0 // 0 to 7 is 10 to 17
+		},
+		"electronics":
+		{
+			"tC1": 0, // Real value 0 to 11
+			"tC2": 0, // 0 to 11
+			"abs": 0, // 0 to 11
+			"eCUMap": 0, // varies per car, 0 to 11 in ferrari
+			"fuelMix": 0, // ?
+			"telemetryLaps": 0 // 0 to 99
+		},
+		"strategy":
+		{
+			"fuel": 60,
+			"nPitStops": 0,
+			"tyreSet": 0,
+			"frontBrakePadCompound": 1,
+			"rearBrakePadCompound": 1,
+			"pitStrategy": [
+				{
+					"fuelToAdd": 0,
+					"tyres":
+					{
+						"tyreCompound": 0,
+						"tyrePressure": [ 56, 56, 53, 53 ]
+					},
+					"tyreSet": 2,
+					"frontBrakePadCompound": 1,
+					"rearBrakePadCompound": 1
+				}
+			],
+			"fuelPerLap": 3.25
+		}
+	},
+	"advancedSetup":
+	{
+		"mechanicalBalance":
+		{
+			"aRBFront": 0, // 0 to 49: real value
+			"aRBRear": 0, // 0 to 49: real value
+			"wheelRate": [ 0, 0, 0, 0 ], // 0 to 10: 94000 to 189000 roughly 9500 per unit
+			"bumpStopRateUp": [ 0, 0, 0, 0 ], // 0 to 22: 300N to 2500N. 1 == 100
+			"bumpStopRateDn": [ 0, 0, 10, 10 ], // WHAT IS THIS? maybe not configuration in ferrari
+			"bumpStopWindow": [ 0, 0, 0, 0 ], // 0 to 19 Front, 0 to 60 Rear: real value
+			"brakeTorque": 0, // 0 to 20 is 80% to 100%
+			"brakeBias": 0 // 0 to 105 is 47% to 68%, 1 == 0.2
+		},
+		"dampers":
+		{
+			"bumpSlow": [ 0, 0, 0, 0 ], // 0 to 11, real value
+			"bumpFast": [ 0, 0, 0, 0 ], // 0 to 12, real value
+			"reboundSlow": [ 0, 0, 0, 0 ], // 0 to 11, real value
+			"reboundFast": [ 0, 0, 0, 0 ] // 0 to 12, real value
+		},
+		"aeroBalance":
+		{
+			"rideHeight": [ 0, 6, 0, 18 ], // [0, _, 2, _] in ferrari positions 0 and 2 in array are Front and rear, others are fixed at 6 & 18: 55mm to 80 mm is 0 to 25
+			"rodLength": [ -0.90836471319198608, -0.90836471319198608, -22.59309196472168, -22.59309196472168 ],
+			"splitter": 0, // 0 fixed in ferrari, but 0 to 10 in other cars
+			"rearWing": 0, // 0 to 14, real value
+			"brakeDuct": [ 0, 0 ] // Front rear 0 to 6 real value
+		},
+		"drivetrain":
+		{
+			"preload": 0 // 0 to 28: 20N to 300N (1 == 10N)
+		}
+	},
+	"trackBopType": 14 // ? Balance or performance
+}
