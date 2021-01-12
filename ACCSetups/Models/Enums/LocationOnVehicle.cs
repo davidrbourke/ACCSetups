@@ -2,7 +2,7 @@
 {
     public enum LocationOnVehicle
     {
-        LEFT_FRONT = 0,
+        LEFT_FRONT = 1,
         RIGHT_FRONT,
         LEFT_REAR,
         RIGHT_REAR,
