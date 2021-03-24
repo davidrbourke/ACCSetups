@@ -1,5 +1,6 @@
 ﻿using ACCSetups;
 using ACCSetups.Models.AccSetup;
+using System.Text.Json;
 
 namespace ACCSetupsTests.Helpers
 {
@@ -31,6 +32,13 @@ namespace ACCSetupsTests.Helpers
             var setupFile = GetSetupFile("Max.json");
 
             return setupFile.LoadedSetup;
+        }
+
+        public static JsonDocument GetSafeSetupJsonDocument()
+        {
+            var setupFile = GetSetupFile("Max.json");
+
+            return setupFile.JsonSetup;
         }
 
         private static SetupFile GetSetupFile(string filename)

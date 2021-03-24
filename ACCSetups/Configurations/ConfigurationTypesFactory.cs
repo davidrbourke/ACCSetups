@@ -9,7 +9,7 @@ namespace ACCSetups.Configurations
             switch (configurationType)
             {
                 case ConfigurationType.REDUCE_UNDERSTEER:
-                    return new Configurations.ReduceUndersteer(setups[0]);
+                    return new ReduceUndersteer();
                 case ConfigurationType.BLEND_SAFE_AND_AGGRESSIVE:
                     return new Configurations.BlendSafeAndAggressive(setups[0], setups[1]);
             }

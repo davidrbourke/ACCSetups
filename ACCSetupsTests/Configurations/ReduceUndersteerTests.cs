@@ -16,8 +16,8 @@ namespace ACCSetupsTests.Configurations
             var aggressiveSetup = PreparedSetups.GetMaxSetup();
 
             // Act
-            var blendSafeAndAggressive = new ReduceUndersteer(aggressiveSetup);
-            var updatedSetup = blendSafeAndAggressive.GetUpdatedSetup();
+            //var blendSafeAndAggressive = new ReduceUndersteer(aggressiveSetup);
+            //var updatedSetup = blendSafeAndAggressive.GetUpdatedSetup();
 
             // Assert
 
