@@ -35,7 +35,7 @@ namespace ACCSetupsTests
                 "basicSetup.electronics.abs",
                 "basicSetup.electronics.eCUMap",
                 "basicSetup.electronics.fuelMix",
-                "basicSetup.electronics.telemetryLaps",
+                "basicSetup.electronics.telemetryLaps"
             };
 
             
