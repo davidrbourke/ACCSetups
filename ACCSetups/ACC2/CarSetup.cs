@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ACCSetups.ACC2
 {
@@ -14,21 +15,26 @@ namespace ACCSetups.ACC2
             }
         }
 
+        public JObject RawJsonSetup
+        {
+            get; private set;
+        }
+
         public CarSetup()
         {
-            SetupCarConfigComponents();
+            _carConfigComponents = new CarConfigComponents().GetCarConfigComponents();
         }
 
         public void LoadCarConfigValues(string setupFileAsString)
         {
-            JObject rawJsonSetup = JObject.Parse(setupFileAsString);
+            RawJsonSetup = JObject.Parse(setupFileAsString);
 
             foreach (var property in _carConfigComponents)
             {
                 if (property.JsonPath.Contains("."))
                 {
                     var levels = property.JsonPath.Split('.');
-                    JObject element = rawJsonSetup;
+                    JObject element = RawJsonSetup;
                     for (var i = 0; i < levels.Length; i++)
                     {
                         var levelName = levels[i];
@@ -49,101 +55,69 @@ namespace ACCSetups.ACC2
                 }
                 else if(!string.IsNullOrWhiteSpace(property.JsonPath))
                 {
-                    JObject element = rawJsonSetup;
+                    JObject element = RawJsonSetup;
                     if (element is JToken)
                     {
                         property.ConfigValues = element[property.JsonPath].ToString();
                     }
                 }
-
             }
         }
 
-        public void SetupCarConfigComponents()
+        public void UpdateCarConfigValues()
         {
-            _carConfigComponents = new List<CarConfigComponent>
+            foreach (var property in _carConfigComponents)
             {
-                new CarConfigComponent
+                if (property.JsonPath.Contains("."))
                 {
-                    JsonPath = "carName",
-                    CarConfigDataType = CarConfigDataType.String
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.tyres.tyreCompound",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.tyres.tyrePressure",
-                    CarConfigDataType = CarConfigDataType.IntegerArray
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.camber",
-                    CarConfigDataType = CarConfigDataType.IntegerArray
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.toe",
-                    CarConfigDataType = CarConfigDataType.IntegerArray
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.staticCamber",
-                    CarConfigDataType = CarConfigDataType.FloatArray
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.toeOutLinear",
-                    CarConfigDataType = CarConfigDataType.FloatArray
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.casterLF",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.casterRF",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.alignment.steerRatio",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.tC1",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.tC2",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.abs",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.eCUMap",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.fuelMix",
-                    CarConfigDataType = CarConfigDataType.Integer
-                },
-                new CarConfigComponent
-                {
-                    JsonPath = "basicSetup.electronics.telemetryLaps",
-                    CarConfigDataType = CarConfigDataType.Integer
+                    var levels = property.JsonPath.Split('.');
+                    JObject element = RawJsonSetup;
+                    for (var i = 0; i < levels.Length; i++)
+                    {
+                        var levelName = levels[i];
+
+                        var elementBlock = element[levelName];
+                        if (elementBlock is JObject)
+                        {
+                            element = (JObject)elementBlock;
+                        }
+                        else if (elementBlock is JToken)
+                        {
+                            if (i == levels.Length - 1)
+                            {
+                                if (!string.IsNullOrWhiteSpace(property.UpdatedConfigValue))
+                                {
+                                    element[levelName] = property.UpdatedConfigValue;
+                                }
+                            }
+                        }
+                    }
                 }
-            };
+                else if (!string.IsNullOrWhiteSpace(property.JsonPath))
+                {
+                    JObject element = RawJsonSetup;
+                    if (element is JToken)
+                    {
+                        if (!string.IsNullOrWhiteSpace(property.UpdatedConfigValue))
+                        {
+                            element[property.JsonPath] = property.UpdatedConfigValue;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void UpdateCarSetupComponent(string path, string value)
+        {
+            _carConfigComponents = _carConfigComponents.Select(component =>
+            {
+                var updatedComponent = component;
+                if(component.JsonPath == path)
+                {
+                    updatedComponent.UpdatedConfigValue = value;
+                }
+                return updatedComponent;
+            }).ToList();
         }
     }
 }

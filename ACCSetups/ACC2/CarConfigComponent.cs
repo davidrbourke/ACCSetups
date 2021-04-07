@@ -5,5 +5,6 @@
         public string JsonPath { get; set; }
         public string ConfigValues { get; set; }
         public  CarConfigDataType CarConfigDataType { get; set; }
+        public string UpdatedConfigValue { get; set; }
     }
 }
