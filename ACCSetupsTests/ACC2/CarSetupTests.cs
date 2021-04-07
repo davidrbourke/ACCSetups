@@ -22,6 +22,7 @@ namespace ACCSetupsTests.ACC2
 
             // Assert
             var components = carSetup.CarConfigComponents;
+            components[0].ConfigValues.Should().Be("ferrari_488_gt3_evo");
             components[1].ConfigValues.Should().Be("0");
             components[2].ConfigValues.Should().Be("[\r\n  56,\r\n  56,\r\n  53,\r\n  53\r\n]");
         }

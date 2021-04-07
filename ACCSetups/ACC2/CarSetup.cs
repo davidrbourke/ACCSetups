@@ -47,6 +47,15 @@ namespace ACCSetups.ACC2
                         }
                     }
                 }
+                else if(!string.IsNullOrWhiteSpace(property.JsonPath))
+                {
+                    JObject element = rawJsonSetup;
+                    if (element is JToken)
+                    {
+                        property.ConfigValues = element[property.JsonPath].ToString();
+                    }
+                }
+
             }
         }
 
